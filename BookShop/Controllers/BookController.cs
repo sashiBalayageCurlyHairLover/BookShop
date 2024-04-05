@@ -97,7 +97,7 @@ namespace BookShop.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if (_context.Books.FindAsync(id) == null)
+            if (await _context.Books.FindAsync(id) == null)
             {
                 return RedirectToAction(nameof(All));
             }

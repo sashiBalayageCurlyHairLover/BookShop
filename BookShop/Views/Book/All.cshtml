@@ -6,7 +6,7 @@
 }
 
 <div class="text-center">
-	<h1>All available books:</h1>
+	<h1>All available books</h1>
 	<div style="display:inline-flex">
 		@if (Model.Count > 0)
 		{
@@ -16,12 +16,12 @@
 					<div class="card-body">
 						<h5 class="card-title">@book.Title</h5>
 						<h6 class="card-subtitle mb-2 text-body-secondary">@book.Description</h6>
-						<p>Area: @book.PublishDate square meters</p>
+						<p>Publish date: @book.PublishDate</p>
 						@if (User.FindFirst(ClaimTypes.NameIdentifier).Value == book.AuthorId || User.IsInRole("Administrator"))
 						{
 							<form>
-								<button asp-controller="Possession" asp-action="Edit" name="id" value="@book.Id" class="btn-warning">Edit</button>
-								<button asp-controller="Possession" asp-action="Delete" name="id" value="@book.Id" class="btn-danger">Delete</button>
+								<button asp-controller="Book" asp-action="Edit" name="id" value="@book.Id" class="btn-warning">Edit</button>
+								<button asp-controller="Book" asp-action="Delete" name="id" value="@book.Id" class="btn-danger">Delete</button>
 							</form>
 						}
 						else

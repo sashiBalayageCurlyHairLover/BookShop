@@ -9,7 +9,7 @@ namespace BookShop.Infrastructure.Data
     public static class DataConstants
     {
         public const int BookTitleMinLength = 3;
-        public const int BookTitleMaxLength = 20;
+        public const int BookTitleMaxLength = 30;
 
         public const int BookDescriptionMinLength = 20;
         public const int BookDescriptionMaxLength = 500;
