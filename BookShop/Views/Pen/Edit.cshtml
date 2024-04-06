@@ -1,0 +1,31 @@
+﻿@using BookShop.Core.Models
+@model PenViewModel
+@{
+	ViewBag.Title = "Edit Pen";
+}
+
+<div class="text-center">
+    <h1>Edit a pen</h1>
+    <form method="post">
+        <div class="mb-3">
+            <label for="exampleTitle" class="form-label">Pen Color</label>
+            <input asp-for="PenColor" type="text" class="form-control" id="exampleTitle" name="PenColor">
+            <span asp-validation-for="PenColor" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleDescription" class="form-label">Manufacturer</label>
+            <input asp-for="Manufacturer" type="text" class="form-control" id="exampleDescription" name="Manufacturer">
+            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleLocation" class="form-label">Ink Capacity</label>
+            <input asp-for="InkCapacity" type="text" class="form-control" id="exampleLocation" name="InkCapacity" pattern="/^[+-]?((\d+(\.\d*)?)|(\.\d+))$/">
+            <span asp-validation-for="InkCapacity" class="text-danger"></span>
+        </div>
+        <button asp-controller="Pen" asp-action="Edit" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+}
