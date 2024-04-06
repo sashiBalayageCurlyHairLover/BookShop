@@ -15,11 +15,11 @@ namespace BookShop.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("All", "Book");
+            }
 
-        public IActionResult Privacy()
-        {
             return View();
         }
 
