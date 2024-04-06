@@ -51,7 +51,7 @@ namespace BookShop.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("BookShop.Infrastructure.Data.Models.BookBuyer", b =>
@@ -66,7 +66,7 @@ namespace BookShop.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookBuyers");
+                    b.ToTable("BookBuyers", (string)null);
                 });
 
             modelBuilder.Entity("BookShop.Infrastructure.Data.Models.Paper", b =>
@@ -100,7 +100,7 @@ namespace BookShop.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Papers");
+                    b.ToTable("Papers", (string)null);
                 });
 
             modelBuilder.Entity("BookShop.Infrastructure.Data.Models.PaperBuyer", b =>
@@ -115,7 +115,7 @@ namespace BookShop.Data.Migrations
 
                     b.HasIndex("PaperId");
 
-                    b.ToTable("PaperBuyers");
+                    b.ToTable("PaperBuyers", (string)null);
                 });
 
             modelBuilder.Entity("BookShop.Infrastructure.Data.Models.Pen", b =>
@@ -147,7 +147,7 @@ namespace BookShop.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Pens");
+                    b.ToTable("Pens", (string)null);
                 });
 
             modelBuilder.Entity("BookShop.Infrastructure.Data.Models.PenBuyer", b =>
@@ -162,7 +162,7 @@ namespace BookShop.Data.Migrations
 
                     b.HasIndex("PenId");
 
-                    b.ToTable("PenBuyers");
+                    b.ToTable("PenBuyers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
