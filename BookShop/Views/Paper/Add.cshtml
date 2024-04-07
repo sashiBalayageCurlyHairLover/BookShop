@@ -1,0 +1,31 @@
+﻿@using BookShop.Core.Models
+@model PaperViewModel
+@{
+	ViewBag.Title = "Add paper";
+}
+
+<div class="text-center">
+    <h1>Add a new paper</h1>
+    <form method="post">
+        <div class="mb-3">
+            <label for="exampleSize" class="form-label">Size</label>
+            <input asp-for="Size" type="text" class="form-control" id="exampleSize" name="Size">
+            <span asp-validation-for="Size" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleColor" class="form-label">Color</label>
+            <input asp-for="Color" type="text" class="form-control" id="exampleColor" name="Color">
+            <span asp-validation-for="Color" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleManufacturer" class="form-label">Manufacturer</label>
+            <input asp-for="Manufacturer" type="text" class="form-control" id="exampleManufacturer" name="Manufacturer">
+            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+        </div>
+        <button asp-controller="Paper" asp-action="Add" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+}
