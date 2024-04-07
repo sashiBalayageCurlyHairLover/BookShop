@@ -1,6 +1,7 @@
 ﻿using BookShop.Core.Models;
 using BookShop.Core.Services;
 using BookShop.Data;
+using BookShop.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -133,6 +134,121 @@ namespace BookShop.Controllers
             await _bookService.DeleteAsync(id);
 
             return RedirectToAction(nameof(All));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Buy(int id)
+        {
+            var entity = await _context.Books.FindAsync(id);
+
+            if (entity == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if (entity.AuthorId == GetUserId())
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var entityBuyer = await _context.BookBuyers.FindAsync(GetUserId(), id);
+
+            if (entityBuyer != null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            TempData["BuyBookId"] = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Buy()
+        {
+            int id = (int)TempData["BuyBookId"];
+
+            var entity = await _context.Books.FindAsync(id);
+
+            if (entity == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if (entity.AuthorId == GetUserId())
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if (await _context.BookBuyers.FindAsync(GetUserId(), id) != null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var bookBuyer = new BookBuyer()
+            {
+                BookId = id,
+                BuyerId = GetUserId()
+            };
+
+            await _context.BookBuyers.AddAsync(bookBuyer);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(All));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Sell(int id)
+        {
+            var entity = await _context.Books.FindAsync(id);
+
+            if (entity == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if (await _context.BookBuyers.FindAsync(GetUserId(), id) == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            TempData["SellBookId"] = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Sell()
+        {
+            int id = (int)TempData["SellBookId"];
+
+            var entity = await _context.Books.FindAsync(id);
+
+            if (entity == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var bookBuyer = await _context.BookBuyers.FindAsync(GetUserId(), id);
+            
+            if (bookBuyer == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            _context.BookBuyers.Remove(bookBuyer);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> BoughtBooks()
+        {
+            var model = await _context.BookBuyers
+                .Where(b => b.BuyerId == GetUserId())
+                .ToListAsync();
+
+            return View(model);
         }
 
         private string GetUserId()

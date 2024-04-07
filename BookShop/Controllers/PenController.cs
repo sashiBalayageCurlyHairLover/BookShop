@@ -67,8 +67,11 @@ namespace BookShop.Controllers
 
             if (entity.OwnerId != GetUserId())
             {
-                return RedirectToAction(nameof(All));
-            }
+				if (!User.IsInRole("Administrator"))
+				{
+					return RedirectToAction(nameof(All));
+				}
+			}
 
             TempData["EditPenOwnerId"] = entity.OwnerId;
             TempData["EditPenId"] = id;
@@ -119,8 +122,11 @@ namespace BookShop.Controllers
 
             if (viewModel.OwnerId != GetUserId())
             {
-                return RedirectToAction(nameof(All));
-            }
+				if (!User.IsInRole("Administrator"))
+				{
+					return RedirectToAction(nameof(All));
+				}
+			}
 
             TempData["DeletePenId"] = id;
 
@@ -141,8 +147,11 @@ namespace BookShop.Controllers
 
             if (viewModel.OwnerId != GetUserId())
             {
-                return RedirectToAction(nameof(All));
-            }
+				if (!User.IsInRole("Administrator"))
+				{
+					return RedirectToAction(nameof(All));
+				}
+			}
 
             await _service.DeleteAsync(id);
 

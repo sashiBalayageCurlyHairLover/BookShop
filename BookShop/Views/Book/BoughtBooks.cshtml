@@ -1,0 +1,42 @@
+﻿@using BookShop.Core.Models
+@using BookShop.Core.Services
+@using BookShop.Infrastructure.Data.Models
+@inject BookService service
+@model List<BookBuyer>
+@{
+	ViewBag.Title = "Bought Books";
+
+	List<BookViewModel> books = new List<BookViewModel>();
+
+	foreach (var entity in Model)
+	{
+		var book = await service.GetByIdAsync(entity.BookId);
+
+		books.Add(book);
+	}
+}
+
+<h1 class="text-center">Bought products</h1>
+<br/>
+@if(Model.Count > 0)
+{
+	<div class="text-center">
+		@foreach (var book in books)
+		{
+			<div class="card" style="width: 18rem;display:block;margin-left: auto; margin-right:auto;display:inline-flex">
+				<div class="card-body">
+					<h5 class="card-title">Title: @book.Title</h5>
+					<h6 class="card-subtitle mb-2 text-body-secondary">Publish date: @book.PublishDate</h6>
+					<p class="card-subtitle mb-2 text-body-secondary">Description: @book.Description</p>
+					<form>
+						<button type="submit" name="id" value="@book.Id" asp-controller="Book" asp-action="Sell" class="btn btn-warning">Sell</button>
+					</form>
+				</div>
+			</div>
+		}
+	</div>
+}
+else
+{
+	<p class="text-center">No bought books yet!</p>
+}

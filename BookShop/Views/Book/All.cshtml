@@ -1,5 +1,7 @@
 ﻿@using BookShop.Core.Models
 @using System.Security.Claims
+@using BookShop.Data
+@inject ApplicationDbContext context
 @model List<BookViewModel>
 @{
 	ViewBag.Title = "All available books";
@@ -20,13 +22,22 @@
 						@if (User.FindFirst(ClaimTypes.NameIdentifier).Value == book.AuthorId || User.IsInRole("Administrator"))
 						{
 							<form>
-								<button asp-controller="Book" asp-action="Edit" name="id" value="@book.Id" class="btn-warning">Edit</button>
-								<button asp-controller="Book" asp-action="Delete" name="id" value="@book.Id" class="btn-danger">Delete</button>
+								<button asp-controller="Book" asp-action="Edit" name="id" value="@book.Id" class="btn btn-warning">Edit</button>
+								<button asp-controller="Book" asp-action="Delete" name="id" value="@book.Id" class="btn btn-danger">Delete</button>
 							</form>
 						}
 						else
 						{
-							
+							if (context.BookBuyers.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value, book.Id) == null)
+							{
+								<form>
+									<button asp-controller="Book" asp-action="Buy" name="id" value="@book.Id" class="btn btn-success">Buy</button>
+								</form>
+							}
+							else
+							{
+								<p class="text-center">You have already bought this book.</p>
+							}
 						}
 					</div>
 				</div>
