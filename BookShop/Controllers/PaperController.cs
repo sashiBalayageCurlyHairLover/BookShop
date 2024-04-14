@@ -258,7 +258,7 @@ namespace BookShop.Controllers
 
 		private string GetUserId()
 		{
-			return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+			return User.FindFirst(ClaimTypes.NameIdentifier).Value;
 		}
 	}
 }

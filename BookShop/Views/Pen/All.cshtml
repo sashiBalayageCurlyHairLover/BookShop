@@ -7,44 +7,45 @@
 	ViewBag.Title = "All Pens";
 }
 
-<h1 class="text-center">All available pens</h1>
-
-@if (Model.Count > 0)
-{
-	<div class="text-center">
-		@foreach (var pen in Model)
+<div class="text-center">
+	<h1>All available pens</h1>
+	<div style="display:inline-flex">
+		@if (Model.Count > 0)
 		{
-			<div class="card text-center" style="display:inline-flex">
-				<div class="card-body">
-					<h5 class="card-title">@pen.PenColor</h5>
-					<h6 class="card-subtitle mb-2 text-body-secondary">Manufactured by: @pen.Manufacturer</h6>
-					<p class="card-text">Ink Capacity: @pen.InkCapacity mL</p>
-					@if (User.FindFirst(ClaimTypes.NameIdentifier).Value == pen.OwnerId || User.IsInRole("Administrator"))
-					{
-						<form>
-							<button type="submit" asp-controller="Pen" asp-action="Edit" name="id" value="@pen.Id" class="btn btn-warning">Edit</button>
-							<button type="submit" asp-controller="Pen" asp-action="Delete" name="id" value="@pen.Id" class="btn btn-danger">Delete</button>
-						</form>
-					}
-					else
-					{
-						if (context.BookBuyers.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value, pen.Id) == null)
+			@foreach (var pen in Model)
+			{
+				<div class="card text-center" style="display:inline-flex">
+					<div class="card-body">
+						<h5 class="card-title">@pen.PenColor</h5>
+						<h6 class="card-subtitle mb-2 text-body-secondary">Manufactured by: @pen.Manufacturer</h6>
+						<p class="card-text">Ink Capacity: @pen.InkCapacity mL</p>
+						@if (User.FindFirst(ClaimTypes.NameIdentifier).Value == pen.OwnerId || User.IsInRole("Administrator"))
 						{
 							<form>
-								<button asp-controller="Pen" asp-action="Buy" name="id" value="@pen.Id" class="btn btn-success">Buy</button>
+								<button type="submit" asp-controller="Pen" asp-action="Edit" name="id" value="@pen.Id" class="btn btn-warning">Edit</button>
+								<button type="submit" asp-controller="Pen" asp-action="Delete" name="id" value="@pen.Id" class="btn btn-danger">Delete</button>
 							</form>
 						}
 						else
 						{
-							<p class="text-center">You have already bought this pen.</p>
+							if (context.PenBuyers.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value, pen.Id) == null)
+							{
+								<form>
+									<button asp-controller="Pen" asp-action="Buy" name="id" value="@pen.Id" class="btn btn-success">Buy</button>
+								</form>
+							}
+							else
+							{
+								<p class="text-center">You have already bought this pen.</p>
+							}
 						}
-					}
+					</div>
 				</div>
-			</div>
+			}
+		}
+		else
+		{
+			<p>No pens available yet!</p>
 		}
 	</div>
-}
-else
-{
-	<p class="text-center">No pens available yet!</p>
-}
+</div>
