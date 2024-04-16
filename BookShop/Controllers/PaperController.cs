@@ -136,6 +136,11 @@ namespace BookShop.Controllers
 				}
 			}
 
+			foreach (var paperBuyer in await _context.PaperBuyers.Where(pb => pb.PaperId == id).ToListAsync())
+			{
+				_context.PaperBuyers.Remove(paperBuyer);
+			}
+
 			await _service.DeleteAsync(id);
 
 			return RedirectToAction(nameof(All));

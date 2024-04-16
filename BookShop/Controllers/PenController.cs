@@ -154,6 +154,11 @@ namespace BookShop.Controllers
 				}
 			}
 
+            foreach (var penBuyer in await _context.PenBuyers.Where(pb => pb.PenId == id).ToListAsync())
+            {
+                _context.PenBuyers.Remove(penBuyer);
+            }
+
             await _service.DeleteAsync(id);
 
             return RedirectToAction(nameof(All));
