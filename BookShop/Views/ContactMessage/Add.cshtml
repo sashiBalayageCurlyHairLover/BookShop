@@ -1,0 +1,29 @@
+﻿@using BookShop.Core.Models
+@model ContactMessageViewModel
+@{
+	ViewBag.Title = "Contact Us";
+}
+
+<h1 class="text-center">Contact Us</h1>
+<form method="post" asp-controller="ContactMessage" asp-action="Add">
+    <div class="mb-3">
+        <label for="exampleTitle" class="form-label">Title</label>
+        <input asp-for="Title" type="text" class="form-control" id="exampleTitle">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="exampleDescription" class="form-label">Description</label>
+        <input asp-for="Description" type="text" class="form-control" id="exampleDescription">
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="exampleSender" class="form-label">Sender</label>
+        <input asp-for="SenderName" type="text" class="form-control" id="exampleSender">
+        <span asp-validation-for="SenderName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
