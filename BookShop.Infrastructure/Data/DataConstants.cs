@@ -31,5 +31,14 @@ namespace BookShop.Infrastructure.Data
 
         public const int PaperManufacturerMinLength = 10;
         public const int PaperManufacturerMaxLength = 40;
-    }
+
+        public const int ContactMessageTitleMinLength = 5;
+		public const int ContactMessageTitleMaxLength = 40;
+
+        public const int ContactMessageDescriptionMinLength = 30;
+		public const int ContactMessageDescriptionMaxLength = 600;
+        
+        public const int ContactMessageSenderNameMinLength = 3;
+		public const int ContactMessageSenderNameMaxLength = 20;
+	}
 }

@@ -23,6 +23,8 @@ namespace BookShop.Data
 
         public DbSet<PaperBuyer> PaperBuyers { get; set; }
 
+        public DbSet<ContactMessage> ContactMessages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<BookBuyer>()
@@ -52,7 +54,13 @@ namespace BookShop.Data
                 .HasForeignKey(b => b.PaperId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            base.OnModelCreating(builder);
+            builder.Entity<ContactMessage>()
+                .HasOne(cm => cm.Sender)
+                .WithMany()
+                .HasForeignKey(cm => cm.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+			base.OnModelCreating(builder);
         }
     }
 }
